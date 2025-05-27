@@ -1,0 +1,109 @@
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% extends "template.njk" %}
+
+<!-- You may want to make further use of these components: https://design-system.service.gov.uk/components/
+but ultimately it is up to you -->
+
+{% block content %}
+  <h1 class="govuk-heading-xl">Welcome the case maintenance page</h1>
+
+  <!-- The freedom is yours. You can design the solution however you like, however there is a starting point provided
+  to ensure you have both services running. You may want to make use of the Gov UK Components:
+  https://design-system.service.gov.uk/components/ to add tabs and so forth :) -->
+
+  {% for item in cases %}
+  {% if item.id %}
+
+  <form method='post' action='/confirm-delete/{{item.id}}'>
+
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: {
+            text: "ID"
+          },
+          value: {
+           text: item.id
+          }
+        },
+        {
+          key: {
+            text: "Case Number"
+          },
+          value: {
+            text: item.caseNumber
+          }
+
+        },
+        {
+          key: {
+            text: "Title"
+          },
+          value: {
+            text: item.title
+          },
+          actions: {
+            items: [
+            {
+                href: "/get-case/"+item.id,
+                text: "Change",
+                visuallyHiddenText: "Change case"
+           }
+           ]
+          }
+        },
+        {
+          key: {
+            text: "Description"
+          },
+          value: {
+             text: item.description
+          }
+        },
+        {
+          key: {
+            text: "Status"
+          },
+          value: {
+             text: item.status
+          },
+          actions: {
+            items: [
+            ]
+          }
+        },
+        {
+          key: {
+           text: "Created Date"
+          },
+          value: {
+           html: item.createdDate
+          }
+        }
+      ]
+    }) }}
+  {% endif %}
+      <div class="moj-button-action">
+              {{ govukButton({
+              href: "/get-case/"+item.id,
+                text: "Change"
+              }) }}
+
+        {{ govukButton({
+          text: "Delete"
+        }) }}
+      </div>
+  </form>
+  {% endfor %}
+
+  {{ govukButton({
+    href: "/add-new-case",
+    text: "Add",
+    type: "submit",
+    preventDoubleClick: true
+    })
+  }}
+
+{% endblock %}

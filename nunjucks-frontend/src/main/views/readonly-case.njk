@@ -1,0 +1,153 @@
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{ import axios, { AxiosResponse } from 'axios';}
+{ import handleUpdate from 'edit-case';}
+{% extends "template.njk" %}
+
+<!-- Further information on the use of these components: https://design-system.service.gov.uk/components/-->
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "/get-cases",
+    classes: "govuk-back-link"
+  }) }}
+
+
+{% endblock %}
+
+{% block content %}
+
+{% set editcase = editcase %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+  <h1 class="govuk-heading-xl">{% if header %} {{header}} {% else %} 'View only case' {% endif %}</h1>
+
+  <!-- The freedom is yours. You can design the solution however you like, however there is a starting point provided
+  to ensure you have both services running. You may want to make use of the Gov UK Components:
+  https://design-system.service.gov.uk/components/ to add tabs and so forth :) -->
+
+<!-- Investigating why PUT is not functional -->
+{% if action %}
+  <form action={{action}} method="post" novalidate>
+{% endif %}
+  {% if case.id %}
+      {% if status == 200 and savedCase %}
+         <h2 class="govuk-heading-x2" style="color: red"> Successfully updated case </h2>
+      {% endif %}
+
+    {{
+
+    govukSummaryList({
+    classes: "govuk-!-margin-bottom-9",
+      rows: [
+        {
+          key: {
+            text: "ID"
+          },
+          value: {
+            html: govukInput({
+                         id: "id"+case.id,
+                         name: "id",
+                         value: case.id,
+                         attributes: {readonly: "readonly"},
+                         disabled: false
+                       })
+          }
+        },
+        {
+          key: {
+            text: "Case Number"
+          },
+          value: {
+              html: govukInput({
+                                           id: "caseNumber"+case.caseNumber,
+                                           name: "caseNumber",
+                                           value: case.caseNumber,
+                                           attributes: { readonly: 'readonly' },
+                                           disabled: false
+                                         })
+
+          }
+        },
+        {
+          key: {
+            text: "Title"
+          },
+          value: {
+            html: govukInput({
+                              id: "title"+case.id,
+                              name: "title",
+                              value: case.title,
+                              attributes: { readonly: 'readonly' }
+                            })
+          }
+        },
+        {
+          key: {
+            text: "Description"
+          },
+          value: {
+            html: govukInput({
+                              id: "description"+case.id,
+                              name: "description",
+                              value: case.description,
+                              attributes: { readonly: 'readonly' }
+                            })
+          }
+        },
+        {
+                  key: {
+                    text: "Status"
+                  },
+                  value: {
+                  html: govukInput({
+                                    id: "status"+case.id,
+                                    name: "status",
+                                    value: case.status,
+                                    attributes: { readonly: 'readonly' }
+                                  })
+
+                  }
+        },
+        {
+          key: {
+           text: "Created Date"
+          },
+          value: {
+           name: "createdDate",
+           html: case.createdDate,
+           disabled: false
+          }
+        },
+        {
+          key: {
+           text: "Updated Date"
+          },
+          value: {
+           name: "modified",
+           html: case.modified,
+           disabled: false
+          }
+        }
+      ]
+    }) }}
+
+  {% endif %}
+
+{% if action %}
+
+          {{ govukButton({
+            text: "Confirm delete"
+          }) }}
+
+      </form>
+{% endif %}
+  </div>
+</div>
+
+{% endblock %}
+

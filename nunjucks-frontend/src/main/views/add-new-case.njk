@@ -1,0 +1,91 @@
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{ import axios, { AxiosResponse } from 'axios';}
+{ import handleUpdate from 'edit-case';}
+{% extends "template.njk" %}
+
+<!-- You may want to make further use of these components: https://design-system.service.gov.uk/components/
+but ultimately it is up to you -->
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "/get-cases",
+    classes: "govuk-back-link"
+  }) }}
+
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+  <h1 class="govuk-heading-xl">Add a new case</h1>
+
+  <!-- The freedom is yours. You can design the solution however you like, however there is a starting point provided
+  to ensure you have both services running. You may want to make use of the Gov UK Components:
+  https://design-system.service.gov.uk/components/ to add tabs and so forth :) -->
+
+<!-- Investigating why PUT is not functional -->
+  <form action="/add-case" method="post" novalidate>
+  {{
+
+    govukSummaryList({
+    classes: "govuk-!-margin-bottom-9",
+      rows: [
+            {
+              key: {
+                text: "Title"
+              },
+              value: {
+                html: govukInput({
+                                  id: "title"+case.id,
+                                  name: "title",
+                                  spellcheck: true
+                                })
+              }
+            },
+            {
+              key: {
+                text: "Description"
+              },
+              value: {
+                html: govukInput({
+                                  id: "descriptionId",
+                                  type: textarea,
+                                  name: "description",
+                                  spellcheck: true
+                                })
+              }
+            },
+            {
+                      key: {
+                        text: "Status"
+                      },
+                      value: {
+                      html: govukInput({
+                                        id: "status"+case.id,
+                                        name: "status"
+                                      })
+
+                      }
+            }
+           ]
+    })
+    }}
+
+        {% if readonly !== 'readonly' %}
+              {{ govukButton({
+                text: "Create"
+              }) }}
+        {% endif %}
+
+        </form>
+  </div>
+</div>
+
+{% endblock %}
+
