@@ -24,14 +24,15 @@ but ultimately it is up to you -->
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
 
-  <h1 class="govuk-heading-xl">Add a new case</h1>
+  <h1 class="govuk-heading-xl">Add user details</h1>
 
   <!-- The freedom is yours. You can design the solution however you like, however there is a starting point provided
   to ensure you have both services running. You may want to make use of the Gov UK Components:
   https://design-system.service.gov.uk/components/ to add tabs and so forth :) -->
 
-<!-- Investigating why PUT is not functional -->
-  <form action="/add-user-details" method="post" novalidate>
+<!-- Investigating why PUT is not functional although it works via Postman -->
+  <form action="/persist-case" method="post" novalidate>
+  {% set user = data %}
   {{
     govukSummaryList({
     classes: "govuk-!-margin-bottom-9",
@@ -50,31 +51,51 @@ but ultimately it is up to you -->
             },
             {
               key: {
-                text: "Description"
+                text: "Given name"
               },
               value: {
                 html: govukTextarea({
-                                     name: "description",
-                                     id: "descriptionId",
+                                     name: "givenName",
+                                     id: "given-nameId",
                                      label: {
                                        classes: "govuk-label--2",
                                        isPageHeading: false
-                                     },
-                                     hint: {
-                                       text: "Do not include personal or financial information, like your National Insurance number or credit card details"
                                      }
-
                                    })
               }
             },
             {
                       key: {
-                        text: "Status"
+                        text: "Surname"
                       },
                       value: {
                       html: govukInput({
-                                        id: "status"+case.id,
-                                        name: "status"
+                                        id: "surname"+case.id,
+                                        name: "surename"
+                                      })
+
+                      }
+            },
+            {
+                      key: {
+                        text: "Address"
+                      },
+                      value: {
+                      html: govukInput({
+                                        id: "address"+case.id,
+                                        name: "address-line1"
+                                      })
+
+                      }
+            },
+            {
+                      key: {
+                        text: "Address line"
+                      },
+                      value: {
+                      html: govukInput({
+                                        id: "address-line2",
+                                        name: "address-line2"
                                       })
 
                       }
@@ -83,9 +104,11 @@ but ultimately it is up to you -->
     })
     }}
 
+    <input type='text' name='user' value="{{ case }}" hidden>
+
         {% if readonly !== 'readonly' %}
               {{ govukButton({
-                text: "Continue"
+                text: "Create"
               }) }}
         {% endif %}
 

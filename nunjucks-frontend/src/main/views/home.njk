@@ -1,6 +1,7 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 {% extends "template.njk" %}
 
 <!-- You may want to make further use of these components: https://design-system.service.gov.uk/components/
@@ -59,7 +60,19 @@ but ultimately it is up to you -->
             text: "Description"
           },
           value: {
-             text: item.description
+                 text: govukTextarea({
+                     name: "description",
+                     id: "description"+item.id,
+                     label: {
+                       classes: "govuk-label--2",
+                       isPageHeading: false
+                     },
+                     hint: {
+                       text: "Do not include personal or financial information, like your National Insurance number or credit card details"
+                     },
+                     value: item.description
+
+                   })
           }
         },
         {

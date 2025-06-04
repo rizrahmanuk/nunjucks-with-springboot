@@ -57,10 +57,38 @@ export default function (app: Application): void {
     try {
       // An example of connecting to the backend (a starting point)
       const data: string = req.body;
+      //const response = await axios.post('http://localhost:8080/case/create-case', data);
+
+      console.log(data);
+      res.render('add-user-details', { case: data, header: 'Add user details' });
+    } catch (error) {
+      console.error('Error making request:', error);
+      res.render('error', { error: error.message });
+    }
+  });
+
+  app.post('/add-user-details', async (req, res) => {
+    try {
+      // An example of connecting to the backend (a starting point)
+      const data: string = req.body;
+      //const response = await axios.post('http://localhost:8080/case/create-case', data);
+
+      console.log(data);
+      res.render('add-user-details', { case: JSON.stringify(data), header: 'Add user details' });
+    } catch (error) {
+      console.error('Error making request:', error);
+      res.render('error', { error: error.message });
+    }
+  });
+
+  app.post('/persist-case', async (req, res) => {
+    try {
+      // An example of connecting to the backend (a starting point)
+      const data: string = req.body;
       const response = await axios.post('http://localhost:8080/case/create-case', data);
 
       console.log(response.data);
-      res.render('readonly-case', { case: response.data, header: 'Add new case' });
+      res.render('add-user-details', { case: response.data, header: 'Add user details' });
     } catch (error) {
       console.error('Error making request:', error);
       res.render('error', { error: error.message });

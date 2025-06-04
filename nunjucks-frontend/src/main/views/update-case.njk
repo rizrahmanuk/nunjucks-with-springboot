@@ -2,6 +2,7 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 { import axios, { AxiosResponse } from 'axios';}
 { import handleUpdate from 'edit-case';}
 {% extends "template.njk" %}
@@ -90,12 +91,18 @@ but ultimately it is up to you -->
             text: "Description"
           },
           value: {
-            html: govukInput({
-                              id: "descriptionId",
-                              name: "description",
-                              value: case.description,
-                              spellcheck: true
-                            })
+            html: govukTextarea({
+                                 name: "description",
+                                 id: "descriptionId",
+                                 label: {
+                                   classes: "govuk-label--2",
+                                   isPageHeading: false
+                                 },
+                                  hint: {
+                                   text: "Do not include personal or financial information, like your National Insurance number or credit card details"
+                                  },
+                                  value: case.description
+                               })
           }
         },
         {

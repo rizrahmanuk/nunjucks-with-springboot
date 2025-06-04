@@ -2,6 +2,7 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 { import axios, { AxiosResponse } from 'axios';}
 { import handleUpdate from 'edit-case';}
 {% extends "template.njk" %}
@@ -91,12 +92,19 @@
             text: "Description"
           },
           value: {
-            html: govukInput({
-                              id: "description"+case.id,
-                              name: "description",
-                              value: case.description,
-                              attributes: { readonly: 'readonly' }
-                            })
+            html: govukTextarea({
+                                 name: "description",
+                                 id: "descriptionId",
+                                 label: {
+                                   classes: "govuk-label--2",
+                                   isPageHeading: false
+                                 },
+                                 hint: {
+                                   text: "Do not include personal or financial information, like your National Insurance number or credit card details"
+                                 },
+                                 attributes: { readonly: 'readonly' },
+                                  value: case.description
+                               })
           }
         },
         {

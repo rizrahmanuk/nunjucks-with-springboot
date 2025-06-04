@@ -12,13 +12,11 @@ import java.util.Optional;
  * Provides CRUD operations and custom query methods through JpaRepository.
  */
 @Repository // Indicates that this interface is a Spring Data repository.
-public interface CaseRepository extends JpaRepository<PoliceCase, Long> {
+public interface CaseOfficerRepository extends JpaRepository<PoliceOfficer, Long> {
 
-    Optional<PoliceCase> findById(Long id);
+    Optional<PoliceOfficer> findById(Long id);
 
     @Override
-    <S extends PoliceCase> S save(S entity);
-
-    PoliceCase findByCaseNumber(String caseNumber);
+    <S extends PoliceOfficer> S save(S entity);
 
 }
