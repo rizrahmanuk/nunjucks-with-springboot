@@ -4,16 +4,6 @@ import { Application } from 'express';
 export default function (app: Application): void {
   module.require('axios');
 
-  app.get('/add-new-case', async (req, res) => {
-    try {
-      // console.log(response.data);
-      res.render('add-new-case');
-    } catch (error) {
-      console.error('Error making request:', error);
-      res.render('error', {});
-    }
-  });
-
   app.get('/get-case/:id', async (req, res) => {
     const caseId: string = req.params.id;
     try {
@@ -53,14 +43,14 @@ export default function (app: Application): void {
     }
   });
 
-  app.post('/add-case', async (req, res) => {
+  app.post('/add-new-case', async (req, res) => {
     try {
       // An example of connecting to the backend (a starting point)
-      const data: string = req.body;
+      const data = req.body;
       //const response = await axios.post('http://localhost:8080/case/create-case', data);
-
+      const json: string = JSON.stringify(req.body);
       console.log(data);
-      res.render('add-user-details', { case: data, header: 'Add user details' });
+      res.render('add-new-case', { policeOfficer: json, header: 'Add first case' });
     } catch (error) {
       console.error('Error making request:', error);
       res.render('error', { error: error.message });
@@ -84,7 +74,10 @@ export default function (app: Application): void {
   app.post('/persist-case', async (req, res) => {
     try {
       // An example of connecting to the backend (a starting point)
-      const data: string = req.body;
+      const dataString: string = JSON.stringify(req.body);
+      const data2: string = dataString.replace('"{', '{').replace('}"', '}');
+      const data3: string = data2.replace(/\\"/g, '"');
+      const data: object = JSON.parse(data3);
       const response = await axios.post('http://localhost:8080/case/create-case', data);
 
       console.log(response.data);

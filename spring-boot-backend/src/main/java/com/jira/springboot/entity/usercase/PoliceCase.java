@@ -35,7 +35,7 @@ public class PoliceCase {
     @JoinColumn(name="officer_id", updatable = false, nullable=false)
 //    @Getter
 //    @Setter
-    private PoliceOfficer user;
+    private PoliceOfficer policeOfficer;
 
     @Column(updatable = false)
     @CreationTimestamp

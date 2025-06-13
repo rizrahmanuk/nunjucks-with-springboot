@@ -4,7 +4,6 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 { import axios, { AxiosResponse } from 'axios';}
-{ import handleUpdate from 'edit-case';}
 {% extends "template.njk" %}
 
 <!-- You may want to make further use of these components: https://design-system.service.gov.uk/components/
@@ -12,7 +11,7 @@ but ultimately it is up to you -->
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",
-    href: "/get-cases",
+    href: "/add-user-details",
     classes: "govuk-back-link"
   }) }}
 
@@ -31,7 +30,7 @@ but ultimately it is up to you -->
   https://design-system.service.gov.uk/components/ to add tabs and so forth :) -->
 
 <!-- Investigating why PUT is not functional -->
-  <form action="/add-user-details" method="post" novalidate>
+  <form action="/persist-case" method="post" novalidate>
   {{
     govukSummaryList({
     classes: "govuk-!-margin-bottom-9",
@@ -42,7 +41,7 @@ but ultimately it is up to you -->
               },
               value: {
                 html: govukInput({
-                                  id: "title"+case.id,
+                                  id: "titleId",
                                   name: "title",
                                   spellcheck: true
                                 })
@@ -73,21 +72,33 @@ but ultimately it is up to you -->
                       },
                       value: {
                       html: govukInput({
-                                        id: "status"+case.id,
+                                        id: "status",
                                         name: "status"
                                       })
 
                       }
-            }
+            },
+             {
+                                  key: {
+                                    text: "PoliceOfficer"
+                                  },
+                                  value: {
+                                  html: govukInput({
+                                                    id: "policeOfficer-id",
+                                                    name: "policeOfficer",
+                                                    value: policeOfficer
+                                                  })
+
+                                  }
+                        }
            ]
     })
     }}
 
-        {% if readonly !== 'readonly' %}
+
               {{ govukButton({
-                text: "Continue"
+                text: "Save"
               }) }}
-        {% endif %}
 
         </form>
   </div>

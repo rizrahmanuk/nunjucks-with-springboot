@@ -14,10 +14,20 @@ import static jakarta.persistence.TemporalType.TIMESTAMP;
  */
 @Entity
 @Data // Generates getters, setters, toString, equals, and hashCode methods.
-@NoArgsConstructor // Generates a no-args constructor.
+//@NoArgsConstructor // Generates a no-args constructor.
 @AllArgsConstructor // Generates a constructor with all arguments.
 @Builder // Generates a builder pattern for creating instances.
 public class PoliceOfficer {
+
+    public PoliceOfficer(String title, String given_name, String surname, String address_line1, String address_line2) {
+        this.given_name = given_name;
+        this.title = title;
+        this.surname = surname;
+        this.address_line1 = address_line1;
+        this.address_line2 = address_line2;
+    }
+
+    public PoliceOfficer (){}
 
 
     @Id
@@ -39,10 +49,10 @@ public class PoliceOfficer {
     @Temporal(TIMESTAMP)
     public Date modified;
 
-    @OneToMany(mappedBy="user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy="policeOfficer", fetch = FetchType.LAZY)
     @Getter
     @Setter
-    private ArrayList<PoliceCase> cases;
+    private ArrayList<PoliceCase> policeCases;
 
     private String title;
     private String given_name;

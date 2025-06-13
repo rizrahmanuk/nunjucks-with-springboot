@@ -69,8 +69,8 @@ public class CaseController {
             final UUID uuid = UUID.randomUUID();
 //            policeCase.setUser(policeOfficerCreated);
             policeCase.setCaseNumber(uuid.toString());
-            PoliceOfficer policeOfficerPersisted = caseService.createOfficer(policeCase.getUser());
-            policeCase.setUser(policeOfficerPersisted);
+            PoliceOfficer policeOfficerPersisted = caseService.createOfficer(policeCase.getPoliceOfficer());
+            policeCase.setPoliceOfficer(policeOfficerPersisted);
             PoliceCase policeCase1 = caseService.createCase(policeCase);
             return policeCase1;
         } catch (Exception exception) {

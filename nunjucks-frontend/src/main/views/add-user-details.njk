@@ -31,7 +31,7 @@ but ultimately it is up to you -->
   https://design-system.service.gov.uk/components/ to add tabs and so forth :) -->
 
 <!-- Investigating why PUT is not functional although it works via Postman -->
-  <form action="/persist-case" method="post" novalidate>
+  <form action="/add-new-case" method="post" novalidate>
   {% set user = data %}
   {{
     govukSummaryList({
@@ -43,7 +43,7 @@ but ultimately it is up to you -->
               },
               value: {
                 html: govukInput({
-                                  id: "title"+case.id,
+                                  id: "title",
                                   name: "title",
                                   spellcheck: true
                                 })
@@ -55,7 +55,7 @@ but ultimately it is up to you -->
               },
               value: {
                 html: govukTextarea({
-                                     name: "givenName",
+                                     name: "given_name",
                                      id: "given-nameId",
                                      label: {
                                        classes: "govuk-label--2",
@@ -70,8 +70,8 @@ but ultimately it is up to you -->
                       },
                       value: {
                       html: govukInput({
-                                        id: "surname"+case.id,
-                                        name: "surename"
+                                        id: "surname-id",
+                                        name: "surname"
                                       })
 
                       }
@@ -82,8 +82,8 @@ but ultimately it is up to you -->
                       },
                       value: {
                       html: govukInput({
-                                        id: "address"+case.id,
-                                        name: "address-line1"
+                                        id: "address-id",
+                                        name: "address_line1"
                                       })
 
                       }
@@ -95,7 +95,7 @@ but ultimately it is up to you -->
                       value: {
                       html: govukInput({
                                         id: "address-line2",
-                                        name: "address-line2"
+                                        name: "address_line2"
                                       })
 
                       }
@@ -104,11 +104,9 @@ but ultimately it is up to you -->
     })
     }}
 
-    <input type='text' name='user' value="{{ case }}" hidden>
-
         {% if readonly !== 'readonly' %}
               {{ govukButton({
-                text: "Create"
+                text: "Create case"
               }) }}
         {% endif %}
 
