@@ -7,9 +7,7 @@ import com.jira.springboot.repository.CaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class CaseServiceImpl implements CaseService {
@@ -21,12 +19,21 @@ public class CaseServiceImpl implements CaseService {
     CaseOfficerRepository caseOfficerRepository;
 
     @Override
-    public List<PoliceCase> findAll() {
+    public List<PoliceCase> findAllCases() {
         return caseRepository.findAll();
     }
 
+    public List<PoliceOfficer> findAllOfficers() {
+        try {
+           return caseOfficerRepository.findAll();
+
+        }catch (Exception e){
+            throw e;
+        }
+    }
+
     @Override
-    public Optional<PoliceCase> findById(Long id) {
+    public Optional<PoliceCase> findCaseById(Long id) {
         return caseRepository.findById(id);
     }
 
@@ -36,7 +43,7 @@ public class CaseServiceImpl implements CaseService {
 
     @Override
     public PoliceCase updateCase(PoliceCase userCase) {
-        Optional<PoliceCase> userCaseDB = findById(userCase.getId());
+        Optional<PoliceCase> userCaseDB = findCaseById(userCase.getId());
         // Updates fields if they are not null or empty.
         if(userCaseDB.isPresent()) {
             if (Objects.nonNull(userCase.getTitle()) && !"".equalsIgnoreCase(userCase.getTitle())) {
@@ -64,6 +71,15 @@ public class CaseServiceImpl implements CaseService {
     @Override
     public PoliceOfficer createOfficer(PoliceOfficer policeOfficer) {
         return caseOfficerRepository.save(policeOfficer);
+    }
+
+    public PoliceOfficer updateOfficer(PoliceOfficer policeOfficer){
+        return caseOfficerRepository.saveAndFlush(policeOfficer);
+    }
+
+    @Override
+    public Optional<PoliceOfficer> findOfficerById(Long id) {
+        return caseOfficerRepository.findById(id);
     }
 
     @Override

@@ -1,0 +1,118 @@
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+{ import axios, { AxiosResponse } from 'axios';}
+{ import handleUpdate from 'edit-case';}
+{% extends "template.njk" %}
+
+<!-- You may want to make further use of these components: https://design-system.service.gov.uk/components/
+but ultimately it is up to you -->
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "/get-cases",
+    classes: "govuk-back-link"
+  }) }}
+
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+  <h1 class="govuk-heading-xl">Add user details</h1>
+
+  <!-- The freedom is yours. You can design the solution however you like, however there is a starting point provided
+  to ensure you have both services running. You may want to make use of the Gov UK Components:
+  https://design-system.service.gov.uk/components/ to add tabs and so forth :) -->
+
+<!-- Investigating why PUT is not functional although it works via Postman -->
+<!--  <form action="/update-officer" method="post" novalidate> -->
+  {% set user = data %}
+  {{
+    govukSummaryList({
+    classes: "govuk-!-margin-bottom-9",
+      rows: [
+            {
+              key: {
+                text: "Title"
+              },
+              value: {
+                html: govukInput({
+                                  id: "title",
+                                  name: "title",
+                                  spellcheck: true
+                                })
+              }
+            },
+            {
+              key: {
+                text: "Given name"
+              },
+              value: {
+                html: govukTextarea({
+                                     name: "given_name",
+                                     id: "given-nameId",
+                                     label: {
+                                       classes: "govuk-label--2",
+                                       isPageHeading: false
+                                     }
+                                   })
+              }
+            },
+            {
+                      key: {
+                        text: "Surname"
+                      },
+                      value: {
+                      html: govukInput({
+                                        id: "surname-id",
+                                        name: "surname"
+                                      })
+
+                      }
+            },
+            {
+                      key: {
+                        text: "Address"
+                      },
+                      value: {
+                      html: govukInput({
+                                        id: "address-id",
+                                        name: "address_line1"
+                                      })
+
+                      }
+            },
+            {
+                      key: {
+                        text: "Address line"
+                      },
+                      value: {
+                      html: govukInput({
+                                        id: "address-line2",
+                                        name: "address_line2"
+                                      })
+
+                      }
+            }
+           ]
+    })
+    }}
+
+        {% if readonly !== 'readonly' %}
+              {{ govukButton({
+                text: "Update Officer"
+              }) }}
+        {% endif %}
+
+        </form>
+  </div>
+</div>
+
+{% endblock %}
+

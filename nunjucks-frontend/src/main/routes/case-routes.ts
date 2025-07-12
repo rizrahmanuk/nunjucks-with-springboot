@@ -4,6 +4,24 @@ import { Application } from 'express';
 export default function (app: Application): void {
   module.require('axios');
 
+  app.get('/get-cases', async (req, res) => {
+    try {
+      // const userCase: string = req.data;
+      // const userCase: string = "{'id': 121200, 'caseNumber': '1', 'title': 'Update case details'," +
+      //   " 'description': 'user failed to attend interview'," +
+      //   " 'status': 'UNDER-REVIEW'," +
+      //   " 'createdDate': '02/05/2025'" +
+      //   " }";
+      // An example of connecting to the backend (a starting point)
+      const response = await axios.get('http://localhost:8080/case/get-cases');
+      // console.log(response.data);
+      res.render('home', { case: response.data, status: response.status });
+    } catch (error) {
+      console.error('Error making request:', error);
+      res.render('update-case', {});
+    }
+  });
+
   app.get('/get-case/:id', async (req, res) => {
     const caseId: string = req.params.id;
     try {
@@ -17,6 +35,25 @@ export default function (app: Application): void {
       const response = await axios.get('http://localhost:8080/case/get-case/' + caseId);
       // console.log(response.data);
       res.render('update-case', { case: response.data, status: response.status });
+    } catch (error) {
+      console.error('Error making request:', error);
+      res.render('update-case', {});
+    }
+  });
+
+  app.get('/get-officer/:id', async (req, res) => {
+    const officerId: string = req.params.id;
+    try {
+      // const userCase: string = req.data;
+      // const userCase: string = "{'id': 121200, 'caseNumber': '1', 'title': 'Update case details'," +
+      //   " 'description': 'user failed to attend interview'," +
+      //   " 'status': 'UNDER-REVIEW'," +
+      //   " 'createdDate': '02/05/2025'" +
+      //   " }";
+      // An example of connecting to the backend (a starting point)
+      const response = await axios.get('http://localhost:8080/case/get-officer/' + officerId);
+      // console.log(response.data);
+      res.render('view-user-details', { data: response.data, status: response.status });
     } catch (error) {
       console.error('Error making request:', error);
       res.render('update-case', {});
@@ -75,13 +112,12 @@ export default function (app: Application): void {
     try {
       // An example of connecting to the backend (a starting point)
       const dataString: string = JSON.stringify(req.body);
-      const data2: string = dataString.replace('"{', '{').replace('}"', '}');
-      const data3: string = data2.replace(/\\"/g, '"');
-      const data: object = JSON.parse(data3);
-      const response = await axios.post('http://localhost:8080/case/create-case', data);
+      const dataCleansed: string = dataString.replace('"{', '{').replace('}"', '}').replace(/\\"/g, '"');
+      const dataObject: object = JSON.parse(dataCleansed);
+      const response = await axios.post('http://localhost:8080/case/create-case', dataObject);
 
       console.log(response.data);
-      res.render('add-user-details', { case: response.data, header: 'Add user details' });
+      res.render('police-officers', { police_officers: response.data, header: 'Police Officers' });
     } catch (error) {
       console.error('Error making request:', error);
       res.render('error', { error: error.message });

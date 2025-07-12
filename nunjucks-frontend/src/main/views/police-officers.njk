@@ -1,0 +1,66 @@
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+{ import axios, { AxiosResponse } from 'axios';}
+{% extends "template.njk" %}
+
+<!-- You may want to make further use of these components: https://design-system.service.gov.uk/components/
+but ultimately it is up to you -->
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "/add-user-details",
+    classes: "govuk-back-link"
+  }) }}
+  <head>
+  <style>
+  table, td, th {
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th, td {
+    padding: 15px;
+  }
+  </style>
+
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+  <h1 class="govuk-heading-xl">List of Police Officer(s)</h1>
+
+  <!-- The freedom is yours. You can design the solution however you like, however there is a starting point provided
+  to ensure you have both services running. You may want to make use of the Gov UK Components:
+  https://design-system.service.gov.uk/components/ to add tabs and so forth :) -->
+
+<!-- Investigating why PUT is not functional -->
+<table>
+<tr><th>Title</th> <th>Given Name</th> <th>Surname</th></tr>
+{% for officer in police_officers %}
+  <div>
+    <tr>
+          <td>{{ officer.title }}</td>
+          <td>{{ officer.given_name }}</td>
+          <td>{{ officer.surname }}</td>
+          <td><a href={{ officer.id }}
+    <tr>
+  </div>
+    {% endfor %}
+    </table>
+  </div>
+</div>
+
+{% endblock %}
+

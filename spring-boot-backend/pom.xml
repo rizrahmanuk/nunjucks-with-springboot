@@ -19,7 +19,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.0</version>
+		<version>3.4.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -27,7 +27,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-<!--			<scope>provided</scope>-->
+			<version>3.4.2</version>
 		</dependency>
 
 		<dependency>
@@ -40,21 +40,29 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<version>3.4.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.18.3</version>
 		</dependency>
 
 		<!-- Spring Boot Starter Security -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
+			<version>3.4.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<version>1.18.36</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
+			<version>6.4.2</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -82,13 +90,14 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.7.2</version> <!-- Always use the latest version -->
+			<version>42.7.4</version> <!-- Always use the latest version -->
 		</dependency>
         <dependency>
             <!--Spring boot’s actuator module allows us to monitor and manage application usages in the production environment, -->
             <!--without coding and configuration for any of them. This monitoring and management information is exposed via REST-like endpoint URLs.-->
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+			<version>3.4.2</version>
         </dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -99,6 +108,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
+			<version>3.4.2</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
 		<dependency>
