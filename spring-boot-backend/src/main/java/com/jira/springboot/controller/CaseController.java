@@ -13,7 +13,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/case")
@@ -49,17 +51,8 @@ public class CaseController {
     public PoliceCase createUserCase(@RequestBody PoliceCase policeCase) {
 
         try {
-//            PoliceOfficer policeOfficerCreated = caseService.createOfficer(policeOfficer);
             final UUID uuid = UUID.randomUUID();
-//            policeCase.setUser(policeOfficerCreated);
             policeCase.setCaseNumber(uuid.toString());
-            //PoliceOfficer policeOfficerPersisted = caseService.createOfficer(policeCase.getPoliceOfficer());
-            //policeCase.setPoliceOfficer(policeOfficerPersisted);
-
-
-//            Set<PoliceCase> policeCaseSet = new HashSet<>();
-//            policeCaseSet.add(policeCase);
-//            policeOfficerPersisted.setPoliceCases(policeCaseSet);
             PoliceOfficer persistedPoliceOfficer = caseService.createOfficer(policeCase.getPoliceOfficer());
             policeCase.setPoliceOfficer(persistedPoliceOfficer);
             PoliceCase policeCase1 = caseService.createCase(policeCase);
@@ -88,13 +81,7 @@ public class CaseController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public PoliceCase updateUserCase(@PathVariable("id") int id, @RequestBody PoliceCase userCase, HttpServletRequest request, HttpServletResponse response) {
-//        return """
-//                {"id": 121200, "caseNumber": "1", "title": "Update caaaaaase details",
-//                 "description": "user failed to attend interview",
-//                 "status": "UNDER-REVIEW",
-//                 "createdDate": "2025-06-10T13:45:46.245987"
-//                 }
-//                """;
+
         return caseService.updateCase(userCase);
     }
 
@@ -102,13 +89,7 @@ public class CaseController {
     @DeleteMapping(path = "/delete-case/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public String deleteUserCase(@PathVariable("id") Long id, HttpServletRequest request, HttpServletResponse response) {
-//        return """
-//                {"id": 121200, "caseNumber": "1", "title": "Update caaaaaase details",
-//                 "description": "user failed to attend interview",
-//                 "status": "UNDER-REVIEW",
-//                 "createdDate": "2025-06-10T13:45:46.245987"
-//                 }
-//                """;
+        
         caseService.deleteCase(id);
         return "{ 'response': 'successfully deleted usercase having id ="+id+" }";
     }
